@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-import configparser 
+import configparser,os 
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -9,7 +9,7 @@ app.config['DEBUG'] = True
 dbconfig = configparser.ConfigParser()
 dbconfig.read("db-info.ini")
 uristring = dbconfig.get("dbconfig","mysecret")
-app.config['SQLALCHEMY_DATABASE_URI']= uristring
+app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('DATABASE_URL', uristring)
 app.config['SQLALCHEMY_ECHO']=True
 db = SQLAlchemy(app)
 
