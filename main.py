@@ -34,12 +34,13 @@ def new_post():
     #TODO: After submitting a new post, your app displays the main blog page.
     #TODO: You're able to submit a new post.
     #TODO: If title or body is left empty the form is rendered again, with a helpful error message and any previously-entered content preserved
-    return render_template("new-post.html")
+    return render_template("new-post.html", errors=errors)
 
 @app.route('/blog', methods=['GET'])
 def get_posts():
     #TODO: displays all the blog posts
-    return render_template('all-posts.html')
+    posts = Post.query.all()
+    return render_template('all-posts.html', title="BAB Blog", posts=posts)
 
 if __name__ == '__main__':
     app.run()
