@@ -7,7 +7,7 @@
   {% else %}
     {% for post in posts %}
     <article>
-      <h3><a href="/single-post?{{post.id}}">{{post.title}}</a></h3>
+      <h3><a href="/single?id={{post.id}}">{{post.title}}</a></h3>
       <p>{{post.body}}</p>
     </article>
     <hr>
