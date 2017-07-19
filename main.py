@@ -25,11 +25,11 @@ class Post(db.Model):
         self.draft=draft
 
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/', methods=['GET'])
 def index():
-    return render_template("base.html", title="JMN BAB Blog")
+    return render_template("blog.html", title="JMN BAB Blog")
 
-@app.route('/newpost', methods=['POST'])
+@app.route('/newpost', methods=['POST', 'GET'])
 def new_post():
     #TODO: After submitting a new post, your app displays the main blog page.
     #TODO: You're able to submit a new post.

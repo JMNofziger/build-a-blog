@@ -1,11 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>New Post</h1>
-  <form method='post'>
-    <label>New Post Title:
-      <input type='text' name='title'/>
-    </label>
   
+  <h1>New Post</h1>
+  <form method='post' id="newpost">
+    <div>
+      <label>New Post Title:
+       <input type='text' name='title'/>
+      </label>
+    </div>
+    <div>
+      <label>Post content:<br>
+      <textarea rows='10' form="newpost" name='body'/></textarea>
+    </label>
+    </div>
+    <div>
+    <em>Posts are saved as a draft by default.</em><br>
+    <label>Publish this post?
+      <input type='checkbox' id='draft' name='draft' value=False />Yes 
+    </label>
+    </div>
+    <input type='submit' value='Save Post'/>
+  </form>
 
 {% endblock %}
