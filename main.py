@@ -33,26 +33,41 @@ def index():
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def new_post():
-    #TODO: After submitting a new post, your app displays the main blog page.
-    #TODO: You're able to submit a new post.
-    #TODO: If title or body is left empty the form is rendered again, with a helpful error message and any previously-entered content preserved
     if request.method == 'POST':
+        title_error = ""
+        body_error = ""
         post_title = request.form['title']
+        if len(post_title) == 0 or post_title == "":
+            title_error = "Title field may not be empty."
         post_body = request.form['body']
+        if len(post_body) == 0 or post_body == "":
+            body_error = "Post content field may not be empty."
         post_draft = request.form.get('draft')
+        
+        # handle errors and redirect
+        if title_error or body_error:
+            return render_template('new-post.html', 
+                    post_title=post_title,
+                    title_error=title_error,
+                    post_body=post_body,
+                    body_error=body_error)
+
         new_post=Post(post_title,post_body,post_draft)
         db.session.add(new_post)
         db.session.commit()
-    
+        post = Post.query.filter_by(id=new_post.id).all()
+        return render_template('single-post.html', post=post)  
     return render_template("new-post.html")
 
-#@app.route('/single', methods=['POST','GET'])
+@app.route('/single', methods=['POST','GET'])
+def show_post():
+    post_id=request.args['id']
+    post=Post.query.filter_by(id=post_id).all()
+    return render_template('single-post.html', post=post)
 
 @app.route('/blog', methods=['GET'])
 def get_posts():
-    #TODO: displays all the blog posts
-    posts = Post.query.all()
-    return render_template('all-posts.html', title="BAB Blog", posts=posts)
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run()
